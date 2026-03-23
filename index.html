@@ -2,758 +2,477 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mate al Examen ♟️ (Max)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sistema total · Tema 2</title>
   <style>
-    :root{font-size:18px}
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:#f6f7fb;color:#111}
-    header{background:#fff;padding:16px 18px;border-bottom:1px solid #e6e8ef;position:sticky;top:0;z-index:5}
-    h1{font-size:18px;margin:0 0 6px 0}
-    .sub{font-size:14px;color:#444;margin:0}
-    main{max-width:1040px;margin:0 auto;padding:16px}
-    .row{display:grid;grid-template-columns:1fr;gap:12px}
-    .card{background:#fff;border:1px solid #e6e8ef;border-radius:14px;padding:14px;box-shadow:0 4px 14px rgba(0,0,0,.04)}
-    .meta{font-size:13px;color:#444}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#eef2ff;color:#243bff;font-weight:900;font-size:13px}
-    .big{font-size:18px;font-weight:900}
-    .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    button{border:0;border-radius:12px;padding:12px 14px;cursor:pointer;font-weight:900;font-size:15px}
-    button:disabled{opacity:.45;cursor:not-allowed}
-    .btnPrimary{background:#111827;color:#fff}
-    .btnGhost{background:#eef2ff;color:#1f2a5a}
-    .btnDanger{background:#ffe4e6;color:#7f1d1d}
-    select,input[type="url"],textarea{
-      width:100%;padding:10px 12px;border-radius:12px;border:1px solid #e6e8ef;font-size:15px;
-      background:#fff;box-sizing:border-box
+    :root{
+      --bg:#f4efe6;
+      --paper:#fffdf8;
+      --ink:#2e241c;
+      --muted:#6d5a4d;
+      --line:#dccdbd;
+      --accent:#8c5a2b;
+      --soft:#f8f1e6;
     }
-    textarea{min-height:84px;resize:vertical}
-
-    .board{display:grid;grid-template-columns:1fr;gap:10px}
-    .piece{border:1px solid #e6e8ef;border-radius:12px;padding:10px 12px;background:#fafbff}
-    .piece h3{margin:0;font-size:14px}
-    .piece p{margin:6px 0 0 0;font-size:14px}
-
-    .qTop{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-    .qTitle{font-size:16px;font-weight:900;margin:10px 0 8px 0}
-    .qText{margin:0 0 10px 0;line-height:1.35}
-    .choices{display:grid;gap:10px}
-    .choice{
-      border:2px solid #e6e8ef;border-radius:12px;padding:10px 12px;background:#fff;
-      display:flex;gap:10px;align-items:flex-start;cursor:pointer
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Georgia, "Times New Roman", serif;
+      background:linear-gradient(180deg,#efe6d7 0%, var(--bg) 100%);
+      color:var(--ink);
+      line-height:1.55;
     }
-    .choice input{margin-top:4px;transform:scale(1.2)}
-    .choice strong{font-size:14px}
-    .choice span{font-size:15px}
-    .choice.correct{border-color:#16a34a;background:#ecfdf5}
-    .choice.wrong{border-color:#dc2626;background:#fef2f2}
-
-    .feedback{margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid #e6e8ef;background:#fafafa}
-    .feedback .ok{color:#166534;font-weight:900}
-    .feedback .no{color:#7f1d1d;font-weight:900}
-    .hidden{display:none}
-
-    .stepBox{border:2px solid #c7d2fe;background:#eef2ff;border-radius:14px;padding:12px}
-    .stepTitle{font-weight:900;font-size:16px;margin:0 0 6px 0}
-    .stepLine{margin:0;font-size:15px;line-height:1.35}
-    .stepHint{margin:8px 0 0 0;font-size:13px;color:#1f2a5a;line-height:1.35}
-
-    .writeBox{border:2px solid #e6e8ef;border-radius:12px;padding:12px;background:#fff}
-    .badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #e6e8ef;font-size:12px;margin-right:6px;margin-top:6px}
-    .badge.ok{border-color:#16a34a;background:#ecfdf5}
-    .badge.no{border-color:#dc2626;background:#fef2f2}
-
-    .bannerDone{border:2px solid #16a34a;background:#ecfdf5;border-radius:14px;padding:12px;margin-top:12px}
-    .bannerDone .t{font-weight:1000;font-size:18px;margin:0 0 6px 0}
-    .bannerDone .p{margin:0;font-size:15px}
-    .bannerDone .next{margin-top:10px;font-size:15px;font-weight:900}
-
-    @media (min-width:980px){.row{grid-template-columns:1.15fr .85fr}}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    .hero,.card{
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:0 12px 30px rgba(77,52,33,.08);
+    }
+    .hero{padding:28px;margin-bottom:20px}
+    .card{padding:22px;margin-bottom:18px}
+    h1,h2,h3{margin:0 0 12px}
+    h1{font-size:2.2rem}
+    h2{font-size:1.5rem;color:var(--accent)}
+    h3{font-size:1.15rem}
+    .lead{color:var(--muted);font-size:1.05rem;margin-top:10px}
+    .tag{
+      display:inline-block;padding:6px 12px;border-radius:999px;
+      background:var(--soft);border:1px solid var(--line);font-size:.92rem;
+      margin:0 8px 8px 0;
+    }
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+    .block{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:12px}
+    ul,ol{padding-left:22px}
+    .copy{
+      background:#2d241d;color:#fdf8f1;border-radius:16px;padding:18px;overflow:auto;
+      white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.95rem;
+    }
+    .small{font-size:.95rem;color:var(--muted)}
   </style>
 </head>
-
 <body>
-<header>
-  <h1>Mate al Examen ♟️ (Max)</h1>
-  <p class="sub">Un botón. Un paso. Sin líos.</p>
-</header>
-
-<main>
-  <div class="row">
-    <!-- IZQ -->
-    <section class="card">
-      <div class="qTop">
-        <span class="pill" id="modePill">Plan</span>
-        <span class="meta">Puntos: <span class="big" id="points">0</span> / <span id="pointsMax">0</span></span>
-      </div>
-
-      <div class="controls" style="margin-top:12px;">
-        <div style="flex:1;min-width:230px;">
-          <label class="meta"><strong>Día</strong></label>
-          <select id="daySelect">
-            <option value="sat">Sábado</option>
-            <option value="sun">Domingo</option>
-            <option value="mon">Lunes</option>
-            <option value="tue">Martes</option>
-          </select>
-        </div>
-        <div style="flex:1;min-width:230px;">
-          <label class="meta"><strong>Drive (enlace a carpeta ENTREGAS)</strong></label>
-          <input id="driveLink" type="url" placeholder="Pega aquí el enlace de Drive (carpeta ENTREGAS)" />
-        </div>
-      </div>
-
-      <div class="stepBox" style="margin-top:12px;">
-        <p class="stepTitle" id="stepTitle">Pulsa EMPEZAR</p>
-        <p class="stepLine" id="stepLine">Hoy haremos una parte del examen.</p>
-        <p class="stepHint" id="stepHint">Regla: usa EMPEZAR y SIGUIENTE PREGUNTA.</p>
-
-        <div class="controls" style="margin-top:12px;">
-          <button class="btnPrimary" id="mainBtn">EMPEZAR</button>
-          <button class="btnGhost hidden" id="openDriveBtn">ABRIR DRIVE</button>
-          <button class="btnDanger" id="resetBtn">REINICIAR</button>
-        </div>
-      </div>
-
-      <section class="card" style="margin-top:12px;">
-        <div class="qTop">
-          <div class="meta" id="qMeta">Pregunta: -</div>
-          <div class="meta">⏱ Tiempo: <span id="timer">--:--</span></div>
-        </div>
-
-        <div id="quizArea" class="hidden">
-          <div class="qTitle" id="qTitle"></div>
-          <p class="qText" id="qText"></p>
-
-          <div class="choices hidden" id="choices"></div>
-
-          <div class="writeBox hidden" id="writeArea">
-            <label class="meta"><strong>Escribe 1 línea</strong> (máx. 12–14 palabras)</label>
-            <textarea id="writeInput" placeholder="Ejemplo: La agricultura es el trabajo de la tierra para obtener alimentos."></textarea>
-            <div class="controls" style="margin-top:10px;">
-              <button class="btnPrimary" id="checkWriteBtn">COMPROBAR</button>
-              <button class="btnGhost" id="showModelBtn">VER MODELO</button>
-            </div>
-            <div class="meta" style="margin-top:8px;">Plantilla: <strong>“X es…” + “para…”</strong> + punto.</div>
-          </div>
-
-          <div class="feedback hidden" id="feedbackBox">
-            <div id="feedbackMain"></div>
-            <div class="meta" id="feedbackTip" style="margin-top:6px;"></div>
-            <div class="meta" id="keywordBox" style="margin-top:8px;"></div>
-          </div>
-
-          <div class="controls" style="margin-top:12px;">
-            <button class="btnGhost" id="nextBtn" disabled>SIGUIENTE PREGUNTA</button>
-          </div>
-
-          <div class="bannerDone hidden" id="doneBanner">
-            <p class="t" id="doneTitle">✅ Hecho</p>
-            <p class="p" id="doneText">Ahora toca el siguiente paso.</p>
-            <p class="next">👉 PULSA <strong>CONTINUAR</strong> arriba.</p>
-          </div>
-        </div>
-
-        <div id="idleArea">
-          <p style="margin:0;line-height:1.35;">Aquí aparecerán las preguntas cuando toque.</p>
-        </div>
-      </section>
-    </section>
-
-    <!-- DER -->
-    <section class="card">
-      <h2 style="margin:0 0 10px 0;font-size:16px;">Tablero</h2>
-      <div class="board" id="board"></div>
-      <div class="feedback" style="margin-top:12px;">
-        Nivel: <strong id="levelText">Apertura</strong>
-        <div class="meta" id="levelHint" style="margin-top:6px;"></div>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Sistema total · Tema 2</h1>
+      <p class="lead">Índice listo para copiar y pegar en GitHub sobre <strong>el inicio de la Edad Antigua: Mesopotamia y Egipto</strong>, siguiendo exactamente la estructura por pantallas, retos acumulativos y contenidos de tus apuntes.</p>
+      <div>
+        <span class="tag">16 pantallas</span>
+        <span class="tag">4 retos acumulativos</span>
+        <span class="tag">Nivel guiado y progresivo</span>
+        <span class="tag">Basado en tus apuntes</span>
       </div>
     </section>
-  </div>
-</main>
-
-<script>
-/* =======================
-   PREGUNTAS (claras)
-   ======================= */
-const QUESTION_BANK = [
-  { id:"peones", title:"♙ Peones — Definiciones", pointsPerQuestion:1, timeLimitSeconds: 7*60,
-    questions:[
-      { type:"mc", title:"Empresa", text:"¿Qué es una <strong>empresa</strong>?",
-        explanation:"Empresa = grupo organizado que produce o vende bienes/servicios.",
-        choices:[
-          {label:"A", text:"Grupo organizado que produce o vende bienes/servicios.", correct:true},
-          {label:"B", text:"Solo un supermercado.", correct:false},
-          {label:"C", text:"Una ley del Estado.", correct:false},
-        ]},
-      { type:"mc", title:"Demanda", text:"La <strong>demanda</strong> es…",
-        explanation:"Demanda = lo que la gente quiere y puede comprar.",
-        choices:[
-          {label:"A", text:"Lo que la gente quiere y puede comprar.", correct:true},
-          {label:"B", text:"Lo que hay para vender.", correct:false},
-          {label:"C", text:"El dinero que paga la empresa.", correct:false},
-        ]},
-      { type:"short", title:"Agricultura (1 línea)", text:"¿Qué es la <strong>agricultura</strong>?",
-        model:"La agricultura es el trabajo de la tierra para obtener alimentos.",
-        keywords:["tierra","trabajo","alimentos","cultivos"], minKeywords:2 },
-      { type:"short", title:"Capital (1 línea)", text:"¿Qué es el <strong>capital</strong>?",
-        model:"El capital es dinero y máquinas que se usan para producir.",
-        keywords:["dinero","maquinas","producir"], minKeywords:2 },
-      { type:"short", title:"Sindicatos (1 línea)", text:"¿Qué son los <strong>sindicatos</strong>?",
-        model:"Los sindicatos son grupos de trabajadores que defienden derechos.",
-        keywords:["trabajadores","defienden","derechos","salario","condiciones"], minKeywords:2 },
-      { type:"short", title:"Globalización (1 línea)", text:"¿Qué es la <strong>globalización</strong>?",
-        model:"La globalización es la conexión económica entre países (comercio).",
-        keywords:["conexion","paises","comercio","mundo"], minKeywords:2 },
-      { type:"short", title:"Patronal (1 línea)", text:"¿Qué es la <strong>patronal</strong>?",
-        model:"La patronal representa a los empresarios y a las empresas.",
-        keywords:["empresarios","empresas","representa"], minKeywords:2 },
-    ]
-  },
-
-  { id:"minirepaso", title:"♘ Mini-repaso — 10 minutos", pointsPerQuestion:1, timeLimitSeconds: 10*60,
-    questions:[
-      { type:"mc", title:"Mini: Globalización", text:"Globalización significa…",
-        explanation:"Conexión económica entre países.",
-        choices:[
-          {label:"A", text:"Economías conectadas entre países (comercio/empresas).", correct:true},
-          {label:"B", text:"Vivir siempre en el mismo barrio.", correct:false},
-          {label:"C", text:"Que el Estado fija todos los precios siempre.", correct:false},
-        ]},
-      { type:"mc", title:"Mini: Empresa", text:"Una empresa es…",
-        explanation:"Organización que produce/vende bienes o servicios.",
-        choices:[
-          {label:"A", text:"Un grupo organizado que produce o vende bienes/servicios.", correct:true},
-          {label:"B", text:"Una asignatura.", correct:false},
-          {label:"C", text:"Un impuesto.", correct:false},
-        ]},
-      { type:"short", title:"⭐ BONUS: ejemplo real (1 línea)", text:"Escribe 1 ejemplo real de globalización.",
-        model:"Ejemplo: Camiseta comprada aquí, fabricada en otro país.",
-        keywords:["pais","fabric","compr","marca","china","espana","eeuu","vietnam","mundo"], minKeywords:1 },
-    ]
-  },
-
-  { id:"torres", title:"♖ Torres — Sectores", pointsPerQuestion:1, timeLimitSeconds: 7*60,
-    questions:[
-      { type:"mc", title:"Ganadería", text:"La <strong>ganadería</strong> es del sector…",
-        explanation:"Ganadería = sector primario.",
-        choices:[
-          {label:"A", text:"Primario", correct:true},
-          {label:"B", text:"Secundario", correct:false},
-          {label:"C", text:"Terciario", correct:false},
-        ]},
-      { type:"mc", title:"Comercio", text:"El <strong>comercio</strong> es del sector…",
-        explanation:"Comercio = sector terciario.",
-        choices:[
-          {label:"A", text:"Primario", correct:false},
-          {label:"B", text:"Secundario", correct:false},
-          {label:"C", text:"Terciario", correct:true},
-        ]},
-      { type:"short", title:"Sector primario (1 línea)", text:"Define <strong>sector primario</strong>.",
-        model:"Sector primario: obtiene recursos de la naturaleza (agricultura, pesca).",
-        keywords:["naturaleza","recursos","agricultura","pesca","mineria"], minKeywords:2 },
-    ]
-  },
-
-  { id:"reina", title:"♕ Reina — Capitalismo / Comunismo", pointsPerQuestion:1, timeLimitSeconds: 7*60,
-    questions:[
-      { type:"short", title:"Capitalismo (1 línea)", text:"Explica <strong>sistema capitalista</strong>.",
-        model:"Capitalismo: propiedad privada y precios por oferta y demanda.",
-        keywords:["propiedad","privada","oferta","demanda","precios"], minKeywords:2 },
-      { type:"short", title:"Comunismo (1 línea)", text:"Explica <strong>sistema comunista</strong>.",
-        model:"Comunismo: propiedad estatal y planificación del Estado.",
-        keywords:["estado","propiedad","publica","planificacion"], minKeywords:2 },
-      { type:"short", title:"Regulación de precios (1 línea)", text:"¿Cómo se regulan los <strong>precios</strong>?",
-        model:"Capitalismo: oferta-demanda; comunismo: el Estado controla precios.",
-        keywords:["oferta","demanda","estado","controla","fija"], minKeywords:2 },
-      { type:"short", title:"Medios de producción (1 línea)", text:"¿Qué son los <strong>medios de producción</strong>?",
-        model:"Son fábricas, tierras y máquinas para producir bienes.",
-        keywords:["fabricas","tierras","maquinas","producir"], minKeywords:2 },
-    ]
-  },
-
-  { id:"simulacro", title:"♛ Simulacro — Sin ayudas", pointsPerQuestion:1, timeLimitSeconds: 25*60,
-    questions:[
-      { type:"mc", title:"Precios (simulacro)", text:"En capitalismo el precio depende de…",
-        explanation:"Oferta y demanda.",
-        allowModel:false,
-        choices:[
-          {label:"A", text:"Oferta y demanda", correct:true},
-          {label:"B", text:"Suerte", correct:false},
-          {label:"C", text:"Siempre el Estado", correct:false},
-        ]},
-      { type:"short", title:"Globalización (simulacro)", text:"Define globalización (1 línea).",
-        model:"La globalización es la conexión económica entre países.",
-        keywords:["conexion","paises","comercio"], minKeywords:2,
-        allowModel:false },
-    ]
-  }
-];
-
-/* =======================
-   PLAN (muy claro)
-   - Cada día: 1 ejemplo + 3 vídeos LSE a Drive
-   ======================= */
-const GUIDED_PLAN = {
-  sat: [
-    { kind:"piece", title:"SÁBADO · Paso 1", line:"Haz PEONES (20–25 min).", pieceId:"peones" },
-    { kind:"piece", title:"SÁBADO · Paso 2", line:"Mini-repaso (10 min) + BONUS.", pieceId:"minirepaso" },
-    { kind:"drive_pack", title:"SÁBADO · Paso 3 (DRIVE)", line:"Sube 1 ejemplo + 3 vídeos en LSE.",
-      examplePrompt:"Ejemplo escrito (1 línea): globalización en tu vida (móvil/ropa/comida).",
-      lsePrompts:["LSE 1: Capital (1 línea).","LSE 2: Sindicatos (1 línea).","LSE 3: Patronal (1 línea)."],
-      showDrive:true },
-    { kind:"done", title:"SÁBADO · Fin", line:"✅ Sábado terminado." }
-  ],
-  sun: [
-    { kind:"piece", title:"DOMINGO · Paso 1", line:"Haz TORRES (sectores).", pieceId:"torres" },
-    { kind:"piece", title:"DOMINGO · Paso 2", line:"Haz REINA (capitalismo / comunismo).", pieceId:"reina" },
-    { kind:"drive_pack", title:"DOMINGO · Paso 3 (DRIVE)", line:"Sube 1 ejemplo + 3 vídeos en LSE.",
-      examplePrompt:"Ejemplo escrito (1 línea): un trabajo del sector primario/secundario/terciario en tu barrio.",
-      lsePrompts:["LSE 1: Sector primario (1 línea + ejemplo).","LSE 2: Sector terciario (1 línea + ejemplo).","LSE 3: Globalización (1 línea + ejemplo)."],
-      showDrive:true },
-    { kind:"done", title:"DOMINGO · Fin", line:"✅ Domingo terminado." }
-  ],
-  mon: [
-    { kind:"piece", title:"LUNES · Paso 1", line:"Haz SIMULACRO (sin ayudas).", pieceId:"simulacro", strictNoModel:true },
-    { kind:"drive_pack", title:"LUNES · Paso 2 (DRIVE)", line:"Sube 1 ejemplo + 3 vídeos en LSE.",
-      examplePrompt:"Ejemplo escrito (1 línea): oferta y demanda en una tienda (sube/baja el precio).",
-      lsePrompts:["LSE 1: Oferta (1 línea + ejemplo).","LSE 2: Demanda (1 línea + ejemplo).","LSE 3: Precio (si sube demanda y baja oferta)."],
-      showDrive:true },
-    { kind:"done", title:"LUNES · Fin", line:"✅ Lunes terminado." }
-  ],
-  tue: [
-    { kind:"piece", title:"MARTES · Paso 1", line:"Repite la pieza más floja (Torres o Reina).", pieceId:"__WORST__" },
-    { kind:"drive_pack", title:"MARTES · Paso 2 (DRIVE)", line:"Sube 1 ejemplo + 3 vídeos en LSE.",
-      examplePrompt:"Ejemplo escrito (1 línea): medios de producción (fábrica/tierra/máquinas) y quién los posee.",
-      lsePrompts:["LSE 1: Capitalismo (1 línea + ejemplo).","LSE 2: Comunismo (1 línea + ejemplo).","LSE 3: Regulación de precios (capitalismo vs comunismo)."],
-      showDrive:true },
-    { kind:"done", title:"MARTES · Fin", line:"✅ Listo para el examen." }
-  ]
-};
-
-/* =======================
-   MOTOR (simple)
-   ======================= */
-const state = {
-  day:"sat", stepIndex:0, mode:"plan",
-  pieceId:null, qIndex:0,
-  points:0, pointsMax:0,
-  answered:false,
-  timer:null, timeLeft:0,
-  perPieceScore:{},
-  currentWriteChecked:false,
-  strictNoModel:false,
-  awaitingContinue:false,
-};
-
-function $(id){return document.getElementById(id)}
-function escapeHtml(str){
-  return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
-}
-function normalizeText(s){
-  return String(s).toLowerCase()
-    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
-    .replace(/[^a-z0-9\s]/g," ")
-    .replace(/\s+/g," ").trim();
-}
-
-function setModePill(t){$("modePill").textContent=t}
-function updatePointsUI(){$("points").textContent=state.points}
-function stopTimer(){ if(state.timer) clearInterval(state.timer); state.timer=null; }
-function updateTimerUI(){
-  const m=Math.max(0,Math.floor(state.timeLeft/60));
-  const s=Math.max(0,state.timeLeft%60);
-  $("timer").textContent=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
-}
-
-function getPieceById(id){return QUESTION_BANK.find(p=>p.id===id)}
-function getCurrentPiece(){return getPieceById(state.pieceId)}
-function getCurrentQuestion(){return getCurrentPiece().questions[state.qIndex]}
-function driveOk(){return $("driveLink").value.trim().startsWith("http")}
-function getStep(){return GUIDED_PLAN[state.day][state.stepIndex]}
-
-function computePointsMax(){
-  let total=0;
-  for(const p of QUESTION_BANK) total += p.questions.length * p.pointsPerQuestion;
-  state.pointsMax=total;
-  $("pointsMax").textContent=total;
-}
-
-function renderBoard(){
-  const board=$("board"); board.innerHTML="";
-  for(const piece of QUESTION_BANK){
-    const sc=state.perPieceScore[piece.id];
-    const div=document.createElement("div");
-    div.className="piece";
-    div.innerHTML=`<h3>${piece.title}</h3><p><span class="big">${sc.points}</span> / ${sc.max} puntos</p>`;
-    board.appendChild(div);
-  }
-}
-
-function updateLevel(){
-  const p=state.points, max=state.pointsMax;
-  let level="Apertura", hint="Sigue el plan.";
-  if(p>=Math.ceil(max*0.85)){level="Jaque mate ♟️";hint="Repaso suave.";}
-  else if(p>=Math.ceil(max*0.65)){level="Juego sólido";hint="Refuerza lo flojo.";}
-  else if(p>=Math.ceil(max*0.35)){level="Juego en desarrollo";hint="Vas bien.";}
-  $("levelText").textContent=level;
-  $("levelHint").textContent=hint;
-}
-
-function getWorstPieceId(){
-  let worst=null;
-  for(const piece of QUESTION_BANK){
-    if(piece.id==="simulacro") continue;
-    if(piece.id==="minirepaso") continue;
-    const sc=state.perPieceScore[piece.id];
-    const ratio=sc.max? sc.points/sc.max : 0;
-    if(!worst || ratio<worst.ratio) worst={id:piece.id,ratio};
-  }
-  return worst?.id || "torres";
-}
-
-function showStepUI(){
-  const step=getStep();
-  setModePill("Plan");
-
-  $("stepTitle").textContent=step.title;
-  $("stepLine").textContent=step.line;
-
-  if(state.awaitingContinue) $("mainBtn").textContent="CONTINUAR";
-  else if(step.kind==="piece") $("mainBtn").textContent="EMPEZAR";
-  else if(step.kind==="drive_pack") $("mainBtn").textContent="YA LO HE SUBIDO TODO → CONTINUAR";
-  else $("mainBtn").textContent="FIN";
-
-  if(step.kind==="piece"){
-    $("stepHint").innerHTML='Haz preguntas y pulsa <strong>SIGUIENTE PREGUNTA</strong>.';
-  } else if(step.kind==="drive_pack"){
-    const need = driveOk()? "" : "<br><strong>Antes:</strong> pega el enlace de Drive arriba.";
-    const lse = (step.lsePrompts||[]).map(x=>"• "+escapeHtml(x)).join("<br>");
-    $("stepHint").innerHTML =
-      `<strong>Sube a Drive:</strong><br>`+
-      `• ${escapeHtml(step.examplePrompt)}<br>`+
-      `${lse}`+
-      need;
-  } else {
-    $("stepHint").textContent="Buen trabajo.";
-  }
-
-  const showDrive = !!step.showDrive && driveOk();
-  $("openDriveBtn").classList.toggle("hidden", !showDrive);
-  $("openDriveBtn").disabled = !showDrive;
-}
-
-function goNextStep(){
-  const steps=GUIDED_PLAN[state.day];
-  if(state.stepIndex < steps.length-1){
-    state.stepIndex += 1;
-    showStepUI();
-    $("quizArea").classList.add("hidden");
-    $("idleArea").classList.remove("hidden");
-  }
-}
-
-function handleMainBtn(){
-  if(state.awaitingContinue){
-    state.awaitingContinue=false;
-    $("doneBanner").classList.add("hidden");
-    goNextStep();
-    return;
-  }
-
-  const step=getStep();
-
-  if(step.kind==="piece"){
-    let pid=step.pieceId;
-    if(pid==="__WORST__") pid=getWorstPieceId();
-    state.strictNoModel=!!step.strictNoModel;
-    startPiece(pid);
-    return;
-  }
-
-  if(step.kind==="drive_pack"){
-    if(!driveOk()){
-      alert("Pega arriba el enlace de Drive (carpeta ENTREGAS).");
-      return;
-    }
-    goNextStep();
-    return;
-  }
-
-  if(step.kind==="done"){
-    alert("✅ Fin.");
-    return;
-  }
-}
-
-function startPiece(pieceId){
-  state.mode="playing";
-  setModePill("Jugando");
-  state.pieceId=pieceId;
-  state.qIndex=0;
-  state.answered=false;
-  state.currentWriteChecked=false;
-
-  $("idleArea").classList.add("hidden");
-  $("quizArea").classList.remove("hidden");
-  $("doneBanner").classList.add("hidden");
-  $("nextBtn").disabled=true;
-
-  renderQuestion();
-  startTimerForPiece();
-}
-
-function startTimerForPiece(){
-  stopTimer();
-  const piece=getCurrentPiece();
-  state.timeLeft=piece.timeLimitSeconds;
-  updateTimerUI();
-  state.timer=setInterval(()=>{
-    state.timeLeft -= 1;
-    updateTimerUI();
-    if(state.timeLeft<=0){ stopTimer(); finishPiece(true); }
-  },1000);
-}
-
-function renderQuestion(){
-  const piece=getCurrentPiece();
-  const q=getCurrentQuestion();
-  state.answered=false;
-  state.currentWriteChecked=false;
-
-  $("qMeta").textContent=`${piece.title} — ${state.qIndex+1} / ${piece.questions.length}`;
-  $("qTitle").innerHTML=q.title;
-  $("qText").innerHTML=q.text;
-
-  $("feedbackBox").classList.add("hidden");
-  $("feedbackMain").innerHTML="";
-  $("feedbackTip").textContent="";
-  $("keywordBox").innerHTML="";
-
-  $("choices").classList.add("hidden");
-  $("writeArea").classList.add("hidden");
-  $("doneBanner").classList.add("hidden");
-
-  const allowModel=(q.allowModel!==false) && !state.strictNoModel;
-  $("showModelBtn").classList.toggle("hidden", !allowModel);
-
-  if(q.type==="mc") renderMC(q);
-  if(q.type==="short") renderWrite(q);
-
-  $("nextBtn").disabled=true;
-}
-
-function renderMC(q){
-  const el=$("choices");
-  el.classList.remove("hidden");
-  el.innerHTML="";
-  q.choices.forEach((c,idx)=>{
-    const div=document.createElement("label");
-    div.className="choice";
-    div.innerHTML=`<input type="radio" name="choice" value="${idx}"><div><strong>${c.label}</strong> <span>${escapeHtml(c.text)}</span></div>`;
-    div.addEventListener("click", ()=>selectChoice(idx));
-    el.appendChild(div);
-  });
-}
-
-function selectChoice(idx){
-  if(state.answered) return;
-  const q=getCurrentQuestion();
-  const correctIndex=q.choices.findIndex(c=>c.correct);
-  const els=Array.from(document.querySelectorAll(".choice"));
-  els.forEach((el,i)=>{
-    if(i===correctIndex) el.classList.add("correct");
-    if(i===idx && i!==correctIndex) el.classList.add("wrong");
-  });
-
-  const piece=getCurrentPiece();
-  const got=q.choices[idx].correct ? piece.pointsPerQuestion : 0;
-  state.points += got;
-  state.perPieceScore[piece.id].points += got;
-
-  updatePointsUI(); renderBoard(); updateLevel();
-
-  $("feedbackBox").classList.remove("hidden");
-  $("feedbackMain").innerHTML = q.choices[idx].correct
-    ? `<span class="ok">🟩 Correcto.</span> ${escapeHtml(q.explanation||"")}`
-    : `<span class="no">🟥 Incorrecto.</span> ${escapeHtml(q.explanation||"")}`;
-
-  state.answered=true;
-  $("nextBtn").disabled=false;
-}
-
-function renderWrite(q){
-  $("writeArea").classList.remove("hidden");
-  $("writeInput").value="";
-}
-
-function checkWrite(){
-  const piece=getCurrentPiece();
-  const q=getCurrentQuestion();
-  if(q.type!=="short") return;
-  if(state.currentWriteChecked) return;
-
-  const user=normalizeText($("writeInput").value||"");
-  const keywords=(q.keywords||[]).map(normalizeText);
-  let found=0; const foundList=[], missList=[];
-  for(const k of keywords){
-    if(!k) continue;
-    if(user.includes(k)){found++; foundList.push(k);}
-    else missList.push(k);
-  }
-
-  const min=q.minKeywords ?? 2;
-  const ok=found>=min;
-
-  const got= ok ? piece.pointsPerQuestion : 0;
-  state.points += got;
-  state.perPieceScore[piece.id].points += got;
-
-  updatePointsUI(); renderBoard(); updateLevel();
-
-  $("feedbackBox").classList.remove("hidden");
-  $("feedbackMain").innerHTML = ok
-    ? `<span class="ok">🟩 Bien.</span> 1 línea correcta.`
-    : `<span class="no">🟥 Falta clave.</span> Mira el modelo y copia la estructura.`;
-
-  $("feedbackTip").textContent = `Modelo: ${q.model||""}`;
-
-  let html=`<div class="meta"><strong>Palabras clave</strong> (mín. ${min}):</div><div>`;
-  for(const k of foundList) html += `<span class="badge ok">✓ ${escapeHtml(k)}</span>`;
-  for(const k of missList) html += `<span class="badge no">✗ ${escapeHtml(k)}</span>`;
-  html += `</div>`;
-  $("keywordBox").innerHTML=html;
-
-  state.currentWriteChecked=true;
-  state.answered=true;
-  $("nextBtn").disabled=false;
-}
-
-function showModel(){
-  const q=getCurrentQuestion();
-  if(q.type!=="short") return;
-  if(state.strictNoModel || q.allowModel===false) return;
-  $("feedbackBox").classList.remove("hidden");
-  $("feedbackMain").innerHTML = `<span class="ok">Modelo:</span> ${escapeHtml(q.model||"")}`;
-  $("feedbackTip").textContent = "Copia: X es… para…";
-}
-
-function nextQuestion(){
-  const piece=getCurrentPiece();
-  const q=getCurrentQuestion();
-
-  if(q.type==="short" && !state.currentWriteChecked){
-    $("feedbackBox").classList.remove("hidden");
-    $("feedbackMain").innerHTML = `<span class="no">Antes:</span> pulsa <strong>COMPROBAR</strong>.`;
-    return;
-  }
-  if(!state.answered) return;
-
-  if(state.qIndex < piece.questions.length-1){
-    state.qIndex += 1;
-    renderQuestion();
-  } else {
-    stopTimer();
-    finishPiece(false);
-  }
-}
-
-function finishPiece(fromTimeout){
-  const piece=getCurrentPiece();
-  const sc=state.perPieceScore[piece.id];
-
-  $("qMeta").textContent=`${piece.title} — Fin`;
-  $("qTitle").textContent="Pieza terminada ✅";
-  $("qText").innerHTML=`Puntos: <strong>${sc.points}</strong> / ${sc.max}.`;
-
-  $("choices").classList.add("hidden");
-  $("writeArea").classList.add("hidden");
-  $("feedbackBox").classList.add("hidden");
-  $("nextBtn").disabled=true;
-
-  const nextStep = GUIDED_PLAN[state.day][Math.min(state.stepIndex+1, GUIDED_PLAN[state.day].length-1)];
-  $("doneBanner").classList.remove("hidden");
-
-  if(nextStep.kind==="drive_pack"){
-    $("doneTitle").textContent="✅ Ahora toca DRIVE";
-    $("doneText").textContent="Sube 1 ejemplo escrito y 3 vídeos en LSE.";
-  } else if(nextStep.kind==="done"){
-    $("doneTitle").textContent="✅ Día terminado";
-    $("doneText").textContent="Ya has terminado por hoy.";
-  } else {
-    $("doneTitle").textContent="✅ Siguiente paso";
-    $("doneText").textContent="Ahora toca el siguiente paso.";
-  }
-
-  state.mode="plan";
-  setModePill("Plan");
-  state.awaitingContinue=true;
-  showStepUI();
-}
-
-function resetAll(){
-  if(!confirm("¿Reiniciar TODO?")) return;
-  const ok2=prompt("Escribe REINICIAR para confirmar:","");
-  if(ok2!=="REINICIAR") return;
-
-  state.points=0;
-  for(const p of QUESTION_BANK) state.perPieceScore[p.id].points=0;
-
-  state.stepIndex=0;
-  state.mode="plan";
-  state.pieceId=null;
-  state.qIndex=0;
-  state.answered=false;
-  state.currentWriteChecked=false;
-  state.strictNoModel=false;
-  state.awaitingContinue=false;
-
-  stopTimer();
-  $("timer").textContent="--:--";
-  $("quizArea").classList.add("hidden");
-  $("idleArea").classList.remove("hidden");
-  $("nextBtn").disabled=true;
-  $("doneBanner").classList.add("hidden");
-
-  updatePointsUI(); renderBoard(); updateLevel(); showStepUI();
-}
-
-function init(){
-  for(const p of QUESTION_BANK) state.perPieceScore[p.id]={points:0,max:p.questions.length*p.pointsPerQuestion};
-  computePointsMax();
-  updatePointsUI(); renderBoard(); updateLevel();
-
-  state.day="sat";
-  $("daySelect").value=state.day;
-
-  $("daySelect").addEventListener("change",()=>{
-    state.day=$("daySelect").value;
-    state.stepIndex=0;
-    state.awaitingContinue=false;
-    stopTimer();
-    $("timer").textContent="--:--";
-    $("quizArea").classList.add("hidden");
-    $("idleArea").classList.remove("hidden");
-    $("doneBanner").classList.add("hidden");
-    showStepUI();
-  });
-
-  $("driveLink").addEventListener("input", showStepUI);
-
-  $("mainBtn").addEventListener("click", handleMainBtn);
-
-  $("openDriveBtn").addEventListener("click",()=>{
-    const link=$("driveLink").value.trim();
-    if(link.startsWith("http")) window.open(link,"_blank");
-  });
-
-  $("nextBtn").addEventListener("click", nextQuestion);
-  $("checkWriteBtn").addEventListener("click", checkWrite);
-  $("showModelBtn").addEventListener("click", showModel);
-  $("resetBtn").addEventListener("click", resetAll);
-
-  showStepUI();
-}
-init();
-</script>
+
+    <section class="card">
+      <h2>Texto listo para copiar en GitHub</h2>
+      <p class="small">Puedes copiar directamente este bloque y pegarlo en un README, en una issue o en una página de GitHub.</p>
+      <div class="copy"># Sistema total
+
+## 1. Inicio del tema
+Primero aparece un texto global breve con las ideas base:
+- inicio de la Edad Antigua hacia el 3000 a. C.
+- Oriente Próximo y Creciente Fértil
+- Mesopotamia y Egipto como civilizaciones hidráulicas
+- aprovechamiento del agua
+- aparición de la escritura
+
+Después, justo debajo, un esquema global a completar con huecos sencillos:
+- fecha
+- lugar
+- civilizaciones
+- ríos
+- escrituras
+- organización política básica
+- religión
+- función del arte
+
+Aquí el objetivo no es que lo sepa perfecto, sino que vea el mapa general del tema.
+
+---
+
+## 2. Sistema fijo en cada pantalla
+Cada pantalla sigue siempre este orden:
+
+### A. Texto breve
+Un texto de 4 a 6 líneas con lo imprescindible del apartado.
+
+### B. Mini-esquema a completar
+Siempre basado en el texto anterior. Puede ser:
+- lista
+- causa y consecuencia
+- comparación
+- proceso
+- jerarquía
+
+### C. Tres preguntas tipo test
+Nivel fácil. Para reconocer información sin bloquearse.
+
+### D. Dos verdadero o falso
+Para afinar y evitar errores típicos.
+
+### E. Dos preguntas cortas
+Ya obliga a explicar con sus palabras.
+
+### F. Modelos a copiar
+Debajo de cada pregunta corta aparece el modelo correcto.
+
+### G. Mini examen aleatorio de esa misma pantalla
+Mezcla breve del contenido trabajado:
+- 1 test
+- 1 completar
+- 1 verdadero/falso
+- 1 pregunta corta
+
+---
+
+# Orden del tema por pantallas
+
+## Pantalla 1 · Texto global + esquema global
+**Texto breve:**
+La Edad Antigua comenzó hacia el 3000 a. C. en Oriente Próximo, dentro del Creciente Fértil. Allí surgieron Mesopotamia y Egipto, dos civilizaciones hidráulicas que aprovecharon el agua de grandes ríos. Gracias a ello pudieron desarrollar la agricultura y organizar sociedades más complejas. En este contexto aparecieron también las primeras formas de escritura.
+
+**Mini-esquema a completar:**
+- Fecha de inicio: ________
+- Lugar: ________
+- Civilizaciones principales: ________ y ________
+- Ríos: ________, ________ y ________
+- Escrituras: ________ y ________
+- Organización política básica: ________ y ________
+- Religión: ________
+- Función del arte: ________
+
+## Pantalla 2 · Civilizaciones hidráulicas
+Contenidos:
+- diques
+- canales
+- arado
+- rueda
+- productividad
+- crecimiento de población, comercio y artesanía
+- sociedad más jerarquizada
+
+## Pantalla 3 · Invención de la escritura
+Contenidos:
+- 3300 a. C. Mesopotamia
+- 3150 a. C. Egipto
+- comienzo de la Historia
+- documentos escritos para controlar sociedades complejas
+
+## Pantalla 4 · Escritura cuneiforme y Código de Hammurabi
+Contenidos:
+- tablillas de arcilla
+- punzón
+- forma de cuña
+- ley del talión
+
+## Pantalla 5 · Escritura jeroglífica
+Contenidos:
+- dibujos o pictogramas
+- ideas y sonidos
+- piedra, paredes y papiro
+- escribas
+
+## Reto acumulativo 1
+Se coloca aquí, después de haber trabajado:
+- hidráulicas
+- escritura
+- cuneiforme
+- jeroglífica
+
+## Pantalla 6 · Mesopotamia
+Contenidos:
+- Tigris y Éufrates
+- significado de “entre ríos”
+- ciudades-Estado
+- rey, sacerdotes, funcionarios y ejército
+
+## Pantalla 7 · Imperios mesopotámicos
+Contenidos:
+- akkadio
+- babilónico
+- asirio
+- persa
+
+## Pantalla 8 · Arte mesopotámico
+Contenidos:
+- finalidad
+- materiales pobres
+- arco y bóveda
+- palacios y zigurat
+- escultura idealizada y frontal
+- relieve más realista y con movimiento
+
+## Reto acumulativo 2
+Se coloca aquí, para mezclar:
+- Mesopotamia
+- imperios
+- zigurat
+- escritura
+- diferencias con Egipto
+
+## Pantalla 9 · Egipto base
+Contenidos:
+- Nilo
+- Narmer
+- unificación
+- faraón con poder absoluto
+
+## Pantalla 10 · Sociedad egipcia
+Contenidos:
+- privilegiados
+- no privilegiados
+- esclavos
+- derechos de las mujeres
+- Hatshepsut y Nefertiti
+
+## Pantalla 11 · Religión egipcia
+Contenidos:
+- politeísmo
+- Ra y Amón-Ra
+- Osiris
+- Isis
+- Horus
+- Anubis
+- Tot
+- Ka
+
+## Reto acumulativo 3
+Se coloca aquí porque ya hay suficiente materia egipcia para mezclar:
+- Nilo
+- Narmer
+- faraón
+- jerarquía social
+- dioses
+
+## Pantalla 12 · Momificación
+Contenidos:
+- extracción de órganos
+- natrón
+- serrín
+- vendas
+- vasos canopes
+- máscara
+- sarcófago
+- Libro de los Muertos
+- ajuar funerario
+
+## Pantalla 13 · Juicio de Osiris
+Contenidos:
+- balanza
+- corazón
+- pluma
+- Anubis
+- Tot
+- Horus
+- monstruo
+- acceso al reino de Osiris
+
+## Pantalla 14 · Arte egipcio
+Contenidos:
+- función del arte
+- arquitectura adintelada
+- colosalismo
+- piedra
+- templo y sus partes
+- mastaba, pirámide e hipogeo
+- escultura
+- pintura
+
+## Reto acumulativo 4
+Se coloca aquí para mezclar:
+- religión
+- momificación
+- juicio
+- tumbas
+- arte egipcio
+
+## Pantalla 15 · Comparación final Mesopotamia vs Egipto
+Contenidos:
+- ríos
+- escritura
+- organización política
+- religión
+- arte
+- tumbas
+- edificios religiosos
+
+## Pantalla 16 · Examen aleatorio general de “Apuntes de la profesora”
+
+---
+
+# Cómo son los retos acumulativos
+Cada reto acumulativo tiene siempre 5 partes:
+
+## 1. Test mezclado
+Dos o tres preguntas de pantallas anteriores, sin seguir el orden exacto.
+
+## 2. Mini esquema mixto
+Un esquema con huecos que mezcle contenidos.
+Ejemplo:
+- río principal de Egipto
+- escritura de Mesopotamia
+- edificio religioso mesopotámico
+- gobernante egipcio
+
+## 3. Detecta el error
+Aquí el alumno debe:
+- señalar la frase incorrecta
+- corregirla con una frase breve
+
+## 4. Pregunta corta global
+Una pregunta que obligue a conectar ideas.
+
+## 5. Modelo final
+Una respuesta breve correcta.
+
+---
+
+# Detecta el error por retos
+
+## Reto acumulativo 1 · Detecta el error
+Frases tipo:
+- “Las civilizaciones hidráulicas se desarrollaron en zonas con mucha lluvia.”
+- “La escritura jeroglífica nació en Mesopotamia.”
+- “Los diques servían para transportar agua a los cultivos.”
+
+## Reto acumulativo 2 · Detecta el error
+Frases tipo:
+- “Mesopotamia estaba organizada en un único Estado gobernado por el faraón.”
+- “El zigurat era una tumba egipcia.”
+- “La escultura mesopotámica se caracteriza por el uso de colores planos.”
+
+## Reto acumulativo 3 · Detecta el error
+Frases tipo:
+- “Narmer fue un rey de Babilonia.”
+- “La religión egipcia era monoteísta.”
+- “Las mujeres egipcias no podían tener bienes.”
+
+## Reto acumulativo 4 · Detecta el error
+Frases tipo:
+- “Los vasos canopes servían para guardar joyas.”
+- “Anubis anotaba el resultado del juicio de Osiris.”
+- “El hipogeo era un templo dedicado al dios Ra.”
+- “La arquitectura egipcia utilizaba arco y bóveda como elementos principales.”
+
+---
+
+# Base de contenidos de los apuntes
+
+## Civilizaciones hidráulicas
+- La Edad Antigua se inicia hacia el 3000 a. C.
+- Se desarrolla en Oriente Próximo, en el Creciente Fértil.
+- Mesopotamia y Egipto son civilizaciones hidráulicas.
+- Aprovechan grandes ríos en zonas con poca lluvia.
+- Construyen diques y canales.
+- Usan el arado y la rueda.
+- Aumentan la productividad agrícola.
+- Crecen la población, el comercio y la artesanía.
+- La sociedad se hace más diversa y jerarquizada.
+
+## Invención de la escritura
+- Nace hacia 3300 a. C. en Mesopotamia.
+- Nace hacia 3150 a. C. en Egipto.
+- Marca el inicio de la Historia.
+- Sirve para controlar impuestos, comercio, leyes, cosechas y ganado.
+- También se usa en textos religiosos y literarios.
+
+## Escritura cuneiforme
+- Surge en Mesopotamia.
+- Se hace en tablillas de arcilla húmeda.
+- Se usa un punzón.
+- Los signos tienen forma de cuña.
+- El Código de Hammurabi recoge la ley del talión.
+
+## Escritura jeroglífica
+- Surge en Egipto.
+- Está formada por dibujos o pictogramas.
+- Representa ideas y sonidos.
+- Se escribe en piedra, paredes y papiro.
+- Los escribas son especialistas en esta escritura.
+
+## Mesopotamia
+- Surge entre los ríos Tigris y Éufrates.
+- Su nombre significa “entre ríos”.
+- Se organiza en ciudades-Estado.
+- La gobiernan reyes con poder político, militar y religioso.
+- También destacan sacerdotes, funcionarios y ejército.
+- Sus grandes imperios fueron: akkadio, babilónico, asirio y persa.
+
+## Arte mesopotámico
+- Sirve para ensalzar a los poderosos y glorificar a los dioses.
+- Usa materiales pobres como ladrillo y barro.
+- Emplea arco y bóveda.
+- Destacan palacios y zigurat.
+- La escultura es idealizada y frontal.
+- El relieve es más realista, con movimiento y sentimientos.
+
+## Egipto
+- Surge en torno al río Nilo.
+- Narmer unifica el Alto y el Bajo Egipto hacia el 3000 a. C.
+- El faraón tiene poder absoluto y es considerado un dios.
+
+## Sociedad egipcia
+- Se divide en privilegiados, no privilegiados y esclavos.
+- Los privilegiados incluyen al faraón, su familia, altos funcionarios y sacerdotes.
+- Los no privilegiados son campesinos, artesanos y comerciantes.
+- Los esclavos no son libres.
+- Las mujeres egipcias podían tener bienes, comerciar, heredar, divorciarse y escoger marido.
+- Destacan Hatshepsut y Nefertiti.
+
+## Religión egipcia
+- Era politeísta.
+- Dioses principales: Ra, Amón-Ra, Osiris, Isis, Horus, Anubis y Tot.
+- El Ka era el alma.
+- La vida de ultratumba era fundamental.
+
+## Momificación y juicio de Osiris
+- Se extraían órganos.
+- El cuerpo se cubría con natrón.
+- Después se rellenaba con serrín y se envolvía en vendas.
+- Algunas vísceras iban en vasos canopes.
+- La momia llevaba máscara y sarcófago.
+- Se enterraba con Libro de los Muertos y ajuar funerario.
+- En el juicio de Osiris, Anubis pesaba el corazón frente a la pluma.
+- Tot anotaba el resultado.
+- Horus acompañaba al difunto si superaba la prueba.
+
+## Arte egipcio
+- Su función era ensalzar al faraón y glorificar a los dioses.
+- La arquitectura era adintelada.
+- Se caracterizaba por el colosalismo.
+- Usaba piedra.
+- El templo tenía avenida de esfinges, pilonos, patio, sala hipóstila y santuario.
+- Las tumbas principales eran mastaba, pirámide e hipogeo.
+- La escultura era frontal e idealizada.
+- La pintura usaba colores planos y combinaba perfil y frontalidad.</div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Qué te he preparado</h2>
+        <div class="block">
+          <h3>Estructura cerrada y clara</h3>
+          <p>He convertido tus apuntes en un índice completo con las 16 pantallas, los 4 retos acumulativos y la lógica fija de trabajo en cada pantalla.</p>
+        </div>
+        <div class="block">
+          <h3>Formato apto para GitHub</h3>
+          <p>El bloque principal está escrito en Markdown para que puedas copiarlo y pegarlo directamente en GitHub sin tener que reformatearlo.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Si quieres, siguiente paso</h2>
+        <div class="block">
+          <h3>Puedo hacerte también:</h3>
+          <ul>
+            <li>la <strong>Pantalla 1 completa</strong> con texto, test, verdadero/falso y preguntas cortas;</li>
+            <li>los <strong>4 retos acumulativos completos</strong> ya redactados;</li>
+            <li>todo el tema convertido en <strong>pantallas listas para web o Canva</strong>.</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+  </main>
 </body>
 </html>
